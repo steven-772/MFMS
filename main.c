@@ -3,11 +3,11 @@
 #include <string.h>
 #include "employees.h"
 #include "budget.h"
+#include "suppliers.h"
 
 void displayMenu(void);
 int getMenuChoice(void);
 
-void supplierMenu(void);
 void assetMenu(void);
 void reportsMenu(void);
 
@@ -83,6 +83,5 @@ int getMenuChoice(void)
 }
 
 /* placeholders for now */
-void supplierMenu(void) { printf("\nSupplier Management - not done yet\n"); }
 void assetMenu(void)    { printf("\nAsset Management - not done yet\n"); }
 void reportsMenu(void)  { printf("\nReports - not done yet\n"); }
