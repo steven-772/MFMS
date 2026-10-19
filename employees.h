@@ -4,6 +4,8 @@
 void employeeMenu(void);
 void addEmployee(void);
 void displayEmployees(void);
+void searchEmployee(void);
+void printEmployee(int i);
 int findEmployeeById(int id);
 
 #endif

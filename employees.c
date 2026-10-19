@@ -25,8 +25,9 @@ void employeeMenu(void)
         printf("\n---- EMPLOYEE MANAGEMENT ----\n");
         printf("1. Add employee\n");
         printf("2. Display employees\n");
+        printf("3. Search employee\n");
         printf("0. Back to main menu\n");
-        choice = getInt("Enter your choice: ", 0, 2);
+        choice = getInt("Enter your choice: ", 0, 3);
 
         switch (choice)
         {
@@ -35,6 +36,9 @@ void employeeMenu(void)
                 break;
             case 2:
                 displayEmployees();
+                break;
+            case 3:
+                searchEmployee();
                 break;
         }
     }
@@ -105,4 +109,69 @@ void displayEmployees(void)
     }
 
     printf("\nTotal employees: %d\n", count);
+}
+
+/* prints all the details of one employee */
+void printEmployee(int i)
+{
+    printf("\nID:                  %d\n", empId[i]);
+    printf("Name:                %s\n", empName[i]);
+    printf("Department:          %s\n", empDept[i]);
+    printf("Position:            %s\n", empPosition[i]);
+    printf("Basic salary:        N$%.2f\n", basicSalary[i]);
+    printf("Housing allowance:   N$%.2f\n", housing[i]);
+    printf("Transport allowance: N$%.2f\n", transport[i]);
+}
+
+void searchEmployee(void)
+{
+    int choice;
+    int id;
+    int i;
+    int found;
+    char name[SIZE];
+
+    if (count == 0)
+    {
+        printf("\nNo employees yet.\n");
+        return;
+    }
+
+    printf("\n1. Search by ID\n");
+    printf("2. Search by name\n");
+    choice = getInt("Enter your choice: ", 1, 2);
+
+    if (choice == 1)
+    {
+        id = getInt("Enter employee ID: ", 1, 99999);
+        i = findEmployeeById(id);
+
+        if (i == -1)
+        {
+            printf("No employee with ID %d.\n", id);
+        }
+        else
+        {
+            printEmployee(i);
+        }
+    }
+    else
+    {
+        getString("Enter full name: ", name, SIZE);
+        found = 0;
+
+        for (i = 0; i < count; i++)
+        {
+            if (strcmp(empName[i], name) == 0)
+            {
+                printEmployee(i);
+                found++;
+            }
+        }
+
+        if (found == 0)
+        {
+            printf("No employee named %s.\n", name);
+        }
+    }
 }
