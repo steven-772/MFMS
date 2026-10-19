@@ -26,8 +26,9 @@ void employeeMenu(void)
         printf("1. Add employee\n");
         printf("2. Display employees\n");
         printf("3. Search employee\n");
+        printf("4. Calculate salary\n");
         printf("0. Back to main menu\n");
-        choice = getInt("Enter your choice: ", 0, 3);
+        choice = getInt("Enter your choice: ", 0, 4);
 
         switch (choice)
         {
@@ -39,6 +40,9 @@ void employeeMenu(void)
                 break;
             case 3:
                 searchEmployee();
+                break;
+            case 4:
+                calculateSalary();
                 break;
         }
     }
@@ -174,4 +178,66 @@ void searchEmployee(void)
             printf("No employee named %s.\n", name);
         }
     }
+}
+
+/* basic salary plus both allowances */
+double calculateGross(int i)
+{
+    return basicSalary[i] + housing[i] + transport[i];
+}
+
+/* simple tax rate depending on how much the employee earns */
+double calculateTax(double gross)
+{
+    double rate;
+
+    if (gross <= 10000)
+    {
+        rate = 0.05;
+    }
+    else if (gross <= 25000)
+    {
+        rate = 0.15;
+    }
+    else
+    {
+        rate = 0.25;
+    }
+
+    return gross * rate;
+}
+
+void calculateSalary(void)
+{
+    int id;
+    int i;
+    double gross;
+    double tax;
+
+    if (count == 0)
+    {
+        printf("\nNo employees yet.\n");
+        return;
+    }
+
+    id = getInt("Enter employee ID: ", 1, 99999);
+    i = findEmployeeById(id);
+
+    if (i == -1)
+    {
+        printf("No employee with ID %d.\n", id);
+        return;
+    }
+
+    gross = calculateGross(i);
+    tax = calculateTax(gross);
+
+    printf("\n---- SALARY INFORMATION ----\n");
+    printf("Employee:            %s (ID %d)\n", empName[i], empId[i]);
+    printf("Basic salary:        N$%.2f\n", basicSalary[i]);
+    printf("Housing allowance:   N$%.2f\n", housing[i]);
+    printf("Transport allowance: N$%.2f\n", transport[i]);
+    printf("Gross salary:        N$%.2f\n", gross);
+    printf("Tax:                 N$%.2f\n", tax);
+    printf("Net salary:          N$%.2f\n", gross - tax);
 }
